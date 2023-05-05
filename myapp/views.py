@@ -5,10 +5,10 @@ from .models import Book
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect,csrf_exempt
 
 # Create your views here.
-@csrf_protect
+@csrf_exempt
 def index(request):
     if request.method=='GET' and 'submit' in request.GET:
         select = request.GET.get('select')
@@ -63,7 +63,7 @@ def add(request):
     context = {'form':form}
     return render(request,'add.html',context=context)
 
-@csrf_protect
+@csrf_exempt
 def edit(request,id):
     form = Book.objects.get(id=id)
     dic = {
