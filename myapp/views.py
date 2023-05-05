@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
+@csrf_protect
 def index(request):
     if request.method=='GET' and 'submit' in request.GET:
         select = request.GET.get('select')
@@ -62,7 +63,7 @@ def add(request):
     context = {'form':form}
     return render(request,'add.html',context=context)
 
-
+@csrf_protect
 def edit(request,id):
     form = Book.objects.get(id=id)
     dic = {
