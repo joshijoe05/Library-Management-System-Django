@@ -5,6 +5,7 @@ from .models import Book
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
 def index(request):
@@ -46,6 +47,7 @@ def index(request):
         }
     return render(request,'index.html',context=context)
 
+@csrf_protect
 def add(request):
     form = BooksForm()
     if request.method=='POST':
@@ -60,6 +62,7 @@ def add(request):
     context = {'form':form}
     return render(request,'add.html',context=context)
 
+
 def edit(request,id):
     form = Book.objects.get(id=id)
     dic = {
@@ -69,6 +72,7 @@ def edit(request,id):
     }
     return render(request,'edit.html',dic)
 
+@csrf_protect
 def update(request,id):
     if request.method=='POST':
         form = Book(id=id)
@@ -82,6 +86,7 @@ def update(request,id):
         messages.success(request, "Book details updated.")
         return redirect('index')
 
+@csrf_protect
 def delete(request,id):
     book = Book(id=id)
     if request.method=='POST':
