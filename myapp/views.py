@@ -74,6 +74,7 @@ def edit(request,id):
     return render(request,'edit.html',dic)
 
 @csrf_protect
+@csrf_exempt
 def update(request,id):
     if request.method=='POST':
         form = Book(id=id)
