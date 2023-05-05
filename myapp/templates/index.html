@@ -1,0 +1,97 @@
+{% extends 'basic.html' %}
+
+
+{% block content %}
+
+<center><h1 class="display-5" style="margin: 1rem auto;">All Books List</h1></center>
+<div class="row">
+  <form class="d" role="search" method="GET" action="">
+              <div class="col-md-6 " style="margin: 1rem auto;">
+                  <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="select">
+                      <option value="title">Book Title</option>
+                      <option value="author">Book Author</option>
+                      <option value="category">Category of the book</option>
+                  </select>
+              </div>
+              <div class="col-md-6" style="margin:1rem auto;">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2" name="search">
+                <button class="btn btn-outline-success" type="submit" id="button-addon2" name="submit">Search</button>
+              </div>
+            </div>
+            </form>
+</div>
+{% if books|length < 1 %}
+{% if bool %}
+  <center>
+        <h3 class="diaplay-6" style="margin:1rem auto;">Please enter valid search query </h3>
+        <p class="lead">No results matching : <b>{{search}} </b></p>
+      </center>
+    {% else %}
+    <center><h3 class="diaplay-6" style="margin:1rem auto;">Currently no books ... </h3></center>
+{% endif %}
+{% else %}
+<div class="row">
+    <div class="col-md-10" style="margin: 1rem auto 0;">
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Book ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Publisher</th>
+                <th scope="col">Publication Date</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Category</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for book in books %}
+              <tr>
+                <th scope="row">{{book.id}}</th>
+                <td>{{book.title}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.publisher}}</td>
+                <td>{{book.date}}</td>
+                <td>{{book.isbn}}</td>
+                <td>{{book.category}}</td>
+                <td>
+                  <form action="{% url 'delete' id=book.id %}" method="POST">
+                    {% csrf_token %}
+                    <a href="edit/{{book.id}}" class="btn btn-info">Edit</a>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book ? ')">Delete</button>
+                  </form>
+                  <!-- <a href="delete/{{book.id}}" onclick="return confirm('Are you sure you want to delete this book ? ')" class="btn btn-danger">Delete</a> -->
+                </td>
+              </tr>
+              {% endfor %}
+              
+            </tbody>
+          </table>
+
+
+
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+  <div class="col-md-6" style="margin:1rem auto;position: relative;">
+    {% if books.has_previous %}
+    <a href="{% url 'index' %}?page={{books.previous_page_number}}" class="btn btn-outline-primary" style="position: absolute; left: 0;">Previous Page</a>
+    {% endif %}
+    {% if books|length > 0 %}
+    <p class="lead" style="position: absolute; left: 50%; transform: translateX(-50%);">
+      Page {{num}} of {{p.num_pages}}
+    </p>
+    {% endif %}
+    {% if books.has_next %}
+    <a href="{% url 'index' %}?page={{books.next_page_number}}" class="btn btn-outline-primary" style="position: absolute; right: 0;">Next Page</a>
+    {% endif %}
+  </div>
+</div>
+
+
+{% endblock %}

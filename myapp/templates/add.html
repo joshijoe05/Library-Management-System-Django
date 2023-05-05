@@ -1,0 +1,20 @@
+{% extends 'basic.html' %}
+{% block css %}
+.form-group{
+    margin-top:1rem;
+}
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <center><h1 class="display-5" style="margin: 1rem auto;">Add Book Details</h1></center>
+    <div class="row">
+        <div class="col-md-6" style="margin:1rem auto;gap:10px;">
+            <form action="{% url 'add' %}" method="POST">
+                {% csrf_token %}
+                {{form|crispy}}
+                <center><button type="submit" class="btn btn-primary" style="margin: 1rem auto;">Submit</button></center>
+            </form>
+        </div>
+    </div>
+    
+{% endblock %}

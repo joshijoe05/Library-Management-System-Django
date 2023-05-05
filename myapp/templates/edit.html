@@ -1,0 +1,39 @@
+{% extends 'basic.html' %}
+{% block css %}
+.form-group{
+    margin-top:1rem;
+}
+{% endblock %}
+{% block content %}
+<center><h1 class="display-5" style="margin: 1rem auto 0;">Edit Book Details</h1></center>
+
+<div class="row">
+    <div class="col-md-6" style="margin:1rem auto 0;">
+        <form action="/update/{{id}}" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="LDoD33tKgA6VQeCbVCz7qQF1KDsfA5u0K0EY7dJarjhajObxgPNLH4VtAq2bvvgx">
+            
+
+            <div id="div_id_title" class="form-group"> <label for="id_title" class=" requiredField">
+            Title<span class="asteriskField">*</span> </label> <div> <input type="text" name="title" maxlength="200" class="textinput form-control" required="" id="id_title" value="{{form.title}}"> </div> </div>
+            
+            <div id="div_id_author" class="form-group"> <label for="id_author" class=" requiredField">
+            Author<span class="asteriskField">*</span> </label> <div> <input type="text" name="author" maxlength="200" class="textinput form-control" required="" id="id_author" value="{{form.author}}"> </div> </div>
+            
+            <div id="div_id_publisher" class="form-group"> <label for="id_publisher" class=" requiredField">
+            Publisher<span class="asteriskField">*</span> </label> <div> <input type="text" name="publisher" maxlength="200" class="textinput form-control" required="" id="id_publisher" value="{{form.publisher}}"> </div> </div>
+            
+            <div id="div_id_category" class="form-group"> <label for="id_category" class=" requiredField">
+            Category<span class="asteriskField">*</span> </label> <div> <input type="text" name="category" maxlength="200" class="textinput form-control" required="" id="id_category" value="{{form.category}}"> </div> </div>
+            
+            <div id="div_id_date" class="form-group"> <label for="id_date" class=" requiredField">
+            Date<span class="asteriskField">*</span> </label> <div> <input type="date" name="date" class="dateinput form-control" required="" id="id_date" value="{{date}}"> </div> </div>
+            
+            <div id="div_id_isbn" class="form-group"> <label for="id_isbn" class=" requiredField">
+            ISBN<span class="asteriskField">*</span> </label> <div> <input type="text" name="isbn" maxlength="28" minlength="10" class="textinput form-control" required="" id="id_isbn" value="{{form.isbn}}"> </div> </div>
+
+            <center><button type="submit" class="btn btn-outline-success" style="margin: 1rem auto;">Update</button></center>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
